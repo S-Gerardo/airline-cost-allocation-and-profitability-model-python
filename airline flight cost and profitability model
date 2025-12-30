@@ -1,0 +1,138 @@
+# Input expenses incurred on the flight
+print("Flight Expenses")
+# Fuel expenses
+fuel_expenses = int(input("     Enter fuel expenses: "))
+# Airport fees including landing expenses, gate expenses, etc.
+airport_fees = int(input("     Enter airport fees: "))
+# Flight attendant expenses
+cabin_cost_per = int(input("     Enter cost per cabin crew: "))
+# Captain, first officer, etc. expenses
+air_crew_cost_per = int(input("     Enter cost per air crew: "))
+# Number of cabin crew
+num_cabin = int(input("     Enter the number of cabin crew: "))
+# Number of air crew
+num_air_crew = int(input("     Enter the number of air crew: "))
+
+# Total cabin crew and air crew expenses
+cabin_expenses = num_cabin * cabin_cost_per
+air_crew_expenses = num_air_crew * air_crew_cost_per
+
+staff_expenses = cabin_expenses + air_crew_expenses
+
+# Total expenses
+total_expenses = fuel_expenses + staff_expenses + airport_fees
+
+# Input revenue generated on the flight
+print("\nFlight Revenue")
+economy_ticket = int(input("     Enter economy class ticket price: "))
+business_ticket = int(input("     Enter business class ticket price: "))
+first_ticket = int(input("     Enter first class ticket price: "))
+# Revenue generated other than ticket sales
+ancillary_revnue = int(input("     Enter flight ancillary revenue: "))
+
+# Asks the user to enter the number of passengers per cabin
+print("\nPassenger Information")
+economy_pax = int(input("     Enter the number of economy class passengers: "))
+business_pax = int(input("     Enter the number of business class passengers: "))
+first_pax = int(input("     Enter the number of first class passengers: "))
+
+# Total passengers on the flight
+total_pax = economy_pax + business_pax + first_pax
+
+# Total revenue per class
+economy_revenue = economy_ticket * economy_pax
+business_revenue = business_ticket * business_pax
+first_revenue = first_ticket * first_pax
+
+# Total flight revenue
+total_revenue = economy_revenue + business_revenue + first_revenue + ancillary_revnue
+
+# Cost allocation system
+# Allocates the cost of fuel by cabin class
+economy_fuel = round((fuel_expenses * (economy_pax / total_pax)), 2)
+business_fuel = round((fuel_expenses * (business_pax / total_pax)), 2)
+first_fuel = round((fuel_expenses * (first_pax / total_pax)), 2)
+
+# Cabin crew and air crew costs are allocated by passengers per cabin
+eco_staff_allocation = round((staff_expenses * (economy_pax / total_pax)), 2)
+bus_staff_allocation = round((staff_expenses * (business_pax / total_pax)), 2)
+fir_staff_allocation = round((staff_expenses * (first_pax / total_pax)), 2)
+
+# Allocates airport fees based on cabin class revenue share
+economy_fees = round((airport_fees * (economy_revenue / total_revenue)), 2)
+business_fees = round((airport_fees * (business_revenue / total_revenue)) ,2)
+first_fees = round((airport_fees * (first_revenue / total_revenue)), 2)
+
+# Total cost per person in each cabin class
+economy_total_cost = round((economy_fuel + eco_staff_allocation + economy_fees), 2)
+business_total_cost = round((business_fuel + bus_staff_allocation + business_fees), 2)
+first_total_cost = round((first_fuel + fir_staff_allocation + first_fees), 2)
+
+# Cabin profitability
+economy_profit = round((economy_revenue - economy_total_cost), 2)
+business_profit = round((business_revenue - business_total_cost), 2)
+first_profit = round((first_revenue - first_total_cost), 2)
+total_profit = round((total_revenue - total_expenses), 2)
+
+# Passenger profitability
+eco_pax_profit = round((economy_ticket - (economy_total_cost / economy_pax)), 2)
+bus_pax_profit = round((business_ticket - (business_total_cost / business_pax)), 2)
+fir_class_proft = round((first_ticket - (first_total_cost / first_pax)), 2)
+
+
+# Cost per passenger
+if economy_pax > 0:
+    economy_cost_pax = round((economy_total_cost / economy_pax), 2)
+else: 
+    economy_cost_pax = None
+if business_pax > 0:
+    business_cost_pax = round((business_total_cost / business_pax), 2)
+else:
+    business_cost_pax = None
+if first_pax > 0:
+    first_cost_pax = round((first_total_cost / first_pax), 2)
+else:
+    first_cost_pax = None
+
+# Report
+print("\nFlight Revenue, Expense, and Profitability Breakdown")
+print(f"     Total Revenue Generated: ${total_revenue}")
+print(f"     Total Flight Expenses: ${total_expenses}")
+print(f"     = Total Flight Profit: ${total_profit}")
+print(f"     Total Passengers: {total_pax}")
+
+# Economy class report
+if economy_pax > 0:
+    print("\nEconomy Class Report:")
+    print(f"     Total Economy Class Revenue: ${economy_revenue}")
+    print(f"     Total Economy Class Expenses: ${economy_total_cost}")
+    print(f"     = Economy Class Profit: ${economy_profit}")
+    print(f"     Allocated Economy Class Fuel Expenses: ${economy_fuel}")
+    print(f"     Allocated Economy Class Airport Taxes: ${economy_fees}")
+    print(f"     Allocated Economy Class Crew Expenses: ${eco_staff_allocation}")
+    print(f"     = Cost per Economy Class Passenger: ${economy_cost_pax}")
+    print(f"     Profit per Passenger: ${eco_pax_profit}")
+
+# Business class report
+if business_pax > 0:
+    print("\n Business Class Report")
+    print(f"     Total Business Class Revenue: ${business_revenue}")
+    print(f"     Total Business Class Expenses: ${business_total_cost}")
+    print(f"     = Business Class Profit: ${business_profit}")
+    print(f"     Allocated Business Class Fuel Expenses: ${business_fuel}")
+    print(f"     Allocated Business Class Airport Taxes: ${business_fees}")
+    print(f"     Allocated Business Class Crew Expenses: ${bus_staff_allocation}")
+    print(f"     = Cost per Business Class Passenger: ${business_cost_pax}")
+    print(f"     Profit per Passenger: ${bus_pax_profit}")
+
+# First class report
+if first_pax > 0:
+    print("\n First Class Report")
+    print(f"     Total First Class Revenue: ${first_revenue}")
+    print(f"     Total First Class Expenses: ${first_total_cost}")
+    print(f"     = First Class Profit: ${first_profit}")
+    print(f"     Allocated First Class Fuel Expenses: ${first_fuel}")
+    print(f"     Allocated First Class Airport Taxes: ${first_fees}")
+    print(f"     Allocated First Class Crew Expenses: ${fir_staff_allocation}")
+    print(f"     = Cost per First Class Passenger: ${first_cost_pax}")
+    print(f"     Profit per Passenger: ${fir_class_proft}")
